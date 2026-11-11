@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Test: ¿Por qué no consigues descansar? | Noches en Calma</title>
+<meta name="description" content="Test gratuito de 1 minuto: descubre qué está alterando tu sueño y tu calma, y recibe tu plan personalizado.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+</head>
+<body class="qz">
+<div class="box"><div class="in">
+
+<div id="intro">
+  <span class="eyebrow" style="color:var(--gold)">Test gratuito · 1 minuto</span>
+  <h1>¿Por qué tu mente no se apaga cuando te acuestas?</h1>
+  <p class="sub">Responde 8 preguntas rápidas y descubre tu <b>perfil de sueño y ansiedad</b>, con un plan pensado para ti. Sin registros.</p>
+  <button class="btn block" id="start">Empezar el test →</button>
+  <p class="micro" style="text-align:center">Es un test orientativo, no un diagnóstico médico.</p>
+</div>
+
+<div id="q" class="hide">
+  <div class="progress"><i id="pg"></i></div>
+  <h2 id="qt"></h2>
+  <div id="qo"></div>
+</div>
+
+<div id="load" class="hide" style="text-align:center">
+  <div class="spin"></div>
+  <h2>Analizando tus respuestas…</h2>
+  <p class="sub" id="ld">Comparando tu patrón de sueño</p>
+</div>
+
+<div id="res" class="hide">
+  <span class="eyebrow" style="color:var(--gold)">Tu resultado</span>
+  <h1 id="rt"></h1>
+  <p class="sub" id="rd"></p>
+  <div class="bar"><div><span>Nivel de activación nocturna</span><b id="v1"></b></div><i><b id="b1"></b></i></div>
+  <div class="bar"><div><span>Impacto en tu energía diaria</span><b id="v2"></b></div><i><b id="b2"></b></i></div>
+  <div class="bar"><div><span>Margen de mejora con el método</span><b id="v3"></b></div><i><b id="b3"></b></i></div>
+  <p class="sub" style="margin-top:22px"><b style="color:#fff">Tu plan se centrará en:</b></p>
+  <ul id="rl" style="margin:0 0 24px 20px;color:#dbe1f2"></ul>
+  <a class="btn block" id="go" href="index.html">Ver mi plan personalizado →</a>
+  <p class="micro" style="text-align:center">Resultado orientativo. No sustituye la consulta con un profesional sanitario.</p>
+</div>
+
+</div></div>
+<script>
+var Q=[
+ ["¿Con qué frecuencia te cuesta quedarte dormido/a?",[["Casi todas las noches",3,"c"],["Varias noches a la semana",2,"c"],["De vez en cuando",1,"c"],["Casi nunca",0,"c"]]],
+ ["¿Te despiertas de madrugada (hacia las 3-4 h) y no puedes volver a dormir?",[["Sí, casi cada noche",3,"m"],["Varias veces por semana",2,"m"],["Alguna vez",1,"m"],["No",0,"m"]]],
+ ["Cuando te metes en la cama, tu mente…",[["Repasa el día y las cosas pendientes sin parar",3,"a"],["Se llena de preocupaciones sobre el futuro",3,"a"],["Está cansada pero el cuerpo no se relaja",2,"c"],["Se apaga con relativa facilidad",0,"a"]]],
+ ["¿Cómo te levantas por la mañana?",[["Agotado/a, como si no hubiera dormido",3,"e"],["Con poca energía hasta media mañana",2,"e"],["Bastante bien",1,"e"],["Descansado/a",0,"e"]]],
+ ["¿Qué notas en el cuerpo durante el día?",[["Palpitaciones o presión en el pecho",3,"a"],["Nudo en el estómago o tensión en cuello y hombros",2,"a"],["Irritabilidad y falta de concentración",2,"e"],["Nada especial",0,"a"]]],
+ ["¿Desde cuándo duermes mal o sientes esta ansiedad?",[["Más de un año",3,""],["Entre 3 y 12 meses",2,""],["Unas semanas",1,""],["Es algo puntual",0,""]]],
+ ["¿Qué has probado hasta ahora?",[["Infusiones, aplicaciones y rutinas… sin resultado duradero",2,""],["Pastillas o suplementos, y no quiero depender de ellos",3,""],["Casi nada todavía",1,""],["Me funciona lo que hago",0,""]]],
+ ["¿Qué quieres recuperar primero?",[["Dormir de un tirón",0,"m"],["Desconectar la cabeza por la noche",0,"a"],["Tener energía y no sentirme quemado/a",0,"e"],["Dejar de sentir ansiedad durante el día",0,"a"]]]
+];
+var P={
+ a:["Perfil «Mente acelerada»","Tu cuerpo está cansado, pero tu mente sigue en modo alerta. Es un patrón muy común en personas con mucha carga mental: el sistema nervioso no recibe la señal de «ya puedes parar».",["Técnicas de respiración y activación del nervio vago (5 min)","Un ritual de «cierre mental» antes de dormir","Plan SOS para los picos de ansiedad"]],
+ m:["Perfil «Despertar de madrugada»","Puedes conciliar el sueño, pero tu descanso se rompe a media noche. Suele relacionarse con picos de estrés y una rutina vespertina que mantiene el cuerpo en tensión.",["Rutina de tarde-noche para sostener el sueño profundo","Qué hacer exactamente si te despiertas a las 3 h","Ajustes de luz, cena y temperatura"]],
+ e:["Perfil «Agotamiento acumulado»","Llevas tiempo funcionando por encima de tus reservas. Tu cansancio no es pereza: es la huella de un estrés sostenido que ya afecta a tu energía.",["Recuperar energía sin dejar el trabajo","Micro-pausas de regulación durante el día","Un plan de 21 noches para reconstruir tu descanso"]],
+ c:["Perfil «Difícil desconectar»","Te cuesta cruzar la puerta del sueño. Tu cuerpo y tu mente van a ritmos distintos por la noche, y eso retrasa la conciliación.",["Rutina para bajar revoluciones en 20 minutos","Respiración y relajación guiada","Hábitos de pantalla y cafeína que sí marcan diferencia"]]
+};
+var $=function(i){return document.getElementById(i)},s={a:0,m:0,e:0,c:0},n=0,tot=0;
+function show(id){["intro","q","load","res"].forEach(function(x){$(x).classList.toggle("hide",x!==id)})}
+function ask(){
+  if(n>=Q.length)return done();
+  $("pg").style.width=(n/Q.length*100)+"%";$("qt").textContent=Q[n][0];
+  var h=$("qo");h.innerHTML="";
+  Q[n][1].forEach(function(o){var b=document.createElement("button");b.className="opt";b.textContent=o[0];
+    b.onclick=function(){if(o[2])s[o[2]]+=o[1];tot+=o[1];n++;ask()};h.appendChild(b)});
+}
+function done(){
+  $("pg").style.width="100%";show("load");track("Lead");
+  var m=["Comparando tu patrón de sueño","Identificando tu perfil","Preparando tu plan de 21 noches"],i=0;
+  var t=setInterval(function(){$("ld").textContent=m[++i%m.length]},900);
+  setTimeout(function(){clearInterval(t);result()},2900);
+}
+function result(){
+  var k="a",best=-1;for(var x in s)if(s[x]>best){best=s[x];k=x}
+  var d=P[k],act=Math.min(97,Math.max(48,Math.round(40+tot*2.6))),en=Math.min(95,Math.max(42,act-6));
+  $("rt").textContent=d[0];$("rd").textContent=d[1];
+  $("rl").innerHTML=d[2].map(function(l){return "<li>"+l+"</li>"}).join("");
+  $("go").href="index.html?perfil="+k+(location.search?"&"+location.search.slice(1):"");
+  [[1,act],[2,en],[3,91]].forEach(function(p){$("v"+p[0]).textContent=p[1]+"%";requestAnimationFrame(function(){setTimeout(function(){$("b"+p[0]).style.width=p[1]+"%"},60)})});
+  show("res");window.scrollTo(0,0);
+}
+$("start").onclick=function(){track("QuizStart",1);show("q");ask()};
+track("ViewContent");
+</script>
+</body>
+</html>
