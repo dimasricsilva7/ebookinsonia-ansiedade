@@ -1,8 +1,8 @@
 // ÚNICO archivo a editar: checkout, precios y píxel.
 window.CFG = {
   checkoutUrl: "https://REEMPLAZAR-LINK-DE-CHECKOUT-MUNDPAY", // pega aquí el link de MundPay
-  price: "14,90",
-  oldPrice: "39,90",
+  price: "37,90",
+  oldPrice: "64,00",
   pixelId: "" // ID del Píxel de Meta (vacío = sin tracking)
 };
 

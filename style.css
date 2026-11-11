@@ -87,7 +87,7 @@ details>div{padding:0 22px 20px;color:var(--mute)}
 .price{font-family:Fraunces,Georgia,serif;font-size:3.6rem;color:var(--navy);line-height:1;margin:6px 0}
 .price small{font-size:1.2rem}.old{color:var(--mute);text-decoration:line-through}
 .pay{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px}
-.pay span{border:1px solid #d6d0c2;border-radius:6px;padding:3px 9px;font-size:.74rem;font-weight:700;color:var(--mute)}
+.pay img{height:30px;width:auto;border-radius:4px}
 .guar{display:grid;gap:22px;align-items:center;background:#fff;border-radius:var(--r);padding:28px;box-shadow:var(--sh)}
 .seal{width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,#fff7da,var(--gold));display:flex;flex-direction:column;align-items:center;justify-content:center;color:#241a00;font-weight:800;margin:auto;border:4px double #a87100;text-align:center;line-height:1.1}
 .seal b{font-size:2rem;display:block}
@@ -122,3 +122,6 @@ body.qz{background:var(--navy);color:#fff;min-height:100vh;display:flex;flex-dir
 .hide{display:none!important}
 .legal{max-width:760px;margin:0 auto;padding:40px 20px}.legal h2{margin-top:1.4em;font-size:1.3rem}.legal p,.legal li{margin-bottom:.7em}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.cover{width:min(310px,78%);height:auto;margin:0 auto;filter:drop-shadow(0 24px 34px rgba(0,0,0,.45))}
+.cover.sm{width:200px;margin:-6px auto 14px;filter:drop-shadow(0 12px 18px rgba(15,27,58,.3))}
