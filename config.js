@@ -3,7 +3,7 @@ window.CFG = {
   checkoutUrl: "https://REEMPLAZAR-LINK-DE-CHECKOUT-MUNDPAY", // pega aquí el link de MundPay
   price: "37,90",
   oldPrice: "64,00",
-  supportEmail: "", // email público de soporte (aparece en gracias/soporte/privacidad)
+  supportEmail: "suporteebookcontato26@gmail.com", // email público de soporte (aparece en gracias/soporte/privacidad)
   pixelId: "" // ID del Píxel de Meta (vacío = sin tracking)
 };
 
