@@ -43,7 +43,7 @@
   <div class="bar"><div><span>Margen de mejora con el método</span><b id="v3"></b></div><i><b id="b3"></b></i></div>
   <p class="sub" style="margin-top:22px"><b style="color:#fff">Tu plan se centrará en:</b></p>
   <ul id="rl" style="margin:0 0 24px 20px;color:#dbe1f2"></ul>
-  <a class="btn block" id="go" href="index.html">Ver mi plan personalizado →</a>
+  <a class="btn block" id="go" href="/">Ver mi plan personalizado →</a>
   <p class="micro" style="text-align:center">Resultado orientativo. No sustituye la consulta con un profesional sanitario.</p>
 </div>
 
@@ -85,7 +85,7 @@ function result(){
   var d=P[k],act=Math.min(97,Math.max(48,Math.round(40+tot*2.6))),en=Math.min(95,Math.max(42,act-6));
   $("rt").textContent=d[0];$("rd").textContent=d[1];
   $("rl").innerHTML=d[2].map(function(l){return "<li>"+l+"</li>"}).join("");
-  $("go").href="index.html?perfil="+k+(location.search?"&"+location.search.slice(1):"");
+  $("go").href="/?perfil="+k+(location.search?"&"+location.search.slice(1):"");
   [[1,act],[2,en],[3,91]].forEach(function(p){$("v"+p[0]).textContent=p[1]+"%";requestAnimationFrame(function(){setTimeout(function(){$("b"+p[0]).style.width=p[1]+"%"},60)})});
   show("res");window.scrollTo(0,0);
 }
