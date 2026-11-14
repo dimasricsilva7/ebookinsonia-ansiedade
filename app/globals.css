@@ -76,5 +76,7 @@
 .admin-table th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--grey)}
 .admin-table tbody tr:hover{background:var(--cream)}
 .admin-date{color:var(--grey);font-size:13px}
+.admin-del{background:none;border:1px solid var(--line);border-radius:8px;padding:4px 9px;cursor:pointer;font-size:14px;line-height:1;color:var(--red)}
+.admin-del:hover{background:#fbeceb;border-color:#efcfcc}
 @media(max-width:720px){.admin-grid{grid-template-columns:1fr}.admin-row3{grid-template-columns:1fr}}
 @media(max-width:520px){.admin-row2{grid-template-columns:1fr}}

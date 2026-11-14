@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getSettings, saveSettings, getLeads } from "../../lib/db";
+import { getSettings, saveSettings, getLeads, deleteLead } from "../../lib/db";
 import { withDefaults } from "../../lib/defaults";
 
 export const dynamic = "force-dynamic";
@@ -18,6 +18,13 @@ async function login(formData) {
     redirect("/admin");
   }
   redirect("/admin?bad=1");
+}
+
+async function delLead(formData) {
+  "use server";
+  if (!authed()) redirect("/admin");
+  try { await deleteLead(Number(formData.get("id"))); } catch (e) { /* no bloquea */ }
+  redirect("/admin");
 }
 
 async function logout() {
@@ -144,13 +151,19 @@ export default async function Admin({ searchParams }) {
         ) : (
           <div className="admin-table-wrap">
             <table className="admin-table">
-              <thead><tr><th>Nome</th><th>E-mail</th><th>Data</th></tr></thead>
+              <thead><tr><th>Nome</th><th>E-mail</th><th>Data</th><th></th></tr></thead>
               <tbody>
                 {leads.map((l, i) => (
-                  <tr key={i}>
+                  <tr key={l.id ?? i}>
                     <td>{l.name || "—"}</td>
                     <td>{l.email}</td>
                     <td className="admin-date">{new Date(l.created_at).toLocaleString("pt-BR")}</td>
+                    <td>
+                      <form action={delLead}>
+                        <input type="hidden" name="id" value={l.id} />
+                        <button className="admin-del" type="submit" title="Excluir cliente">🗑</button>
+                      </form>
+                    </td>
                   </tr>
                 ))}
               </tbody>
