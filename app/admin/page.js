@@ -50,6 +50,9 @@ const FIELDS = [
   { title: "Avaliação 1", keys: ["testi1_text", "testi1_name", "testi1_place"], span: true, row3: true },
   { title: "Avaliação 2", keys: ["testi2_text", "testi2_name", "testi2_place"], span: true, row3: true },
   { title: "Avaliação 3", keys: ["testi3_text", "testi3_name", "testi3_place"], span: true, row3: true },
+  { title: "Avaliação 4", keys: ["testi4_text", "testi4_name", "testi4_place"], span: true, row3: true },
+  { title: "Avaliação 5", keys: ["testi5_text", "testi5_name", "testi5_place"], span: true, row3: true },
+  { title: "Avaliação 6", keys: ["testi6_text", "testi6_name", "testi6_place"], span: true, row3: true },
 ];
 const LABELS = {
   heroTitle: "Título da hero",
@@ -64,8 +67,11 @@ const LABELS = {
   testi1_text: "Depoimento", testi1_name: "Nome", testi1_place: "Cidade",
   testi2_text: "Depoimento", testi2_name: "Nome", testi2_place: "Cidade",
   testi3_text: "Depoimento", testi3_name: "Nome", testi3_place: "Cidade",
+  testi4_text: "Depoimento", testi4_name: "Nome", testi4_place: "Cidade",
+  testi5_text: "Depoimento", testi5_name: "Nome", testi5_place: "Cidade",
+  testi6_text: "Depoimento", testi6_name: "Nome", testi6_place: "Cidade",
 };
-const BIG = new Set(["heroTitle", "authorDesc", "testi1_text", "testi2_text", "testi3_text"]);
+const BIG = new Set(["heroTitle", "authorDesc", "testi1_text", "testi2_text", "testi3_text", "testi4_text", "testi5_text", "testi6_text"]);
 
 export default async function Admin({ searchParams }) {
   if (!authed()) {

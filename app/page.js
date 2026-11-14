@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const s = withDefaults(await getSettings());
-  const testis = [1, 2, 3]
+  const testis = [1, 2, 3, 4, 5, 6]
     .map((i) => ({ text: s[`testi${i}_text`], name: s[`testi${i}_name`], place: s[`testi${i}_place`] }))
     .filter((t) => t.text && t.text.trim());
 
