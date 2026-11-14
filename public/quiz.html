@@ -10,22 +10,52 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <script src="config.js"></script>
+<style>
+  .qz .in{animation:fade .45s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .opt{transition:transform .12s ease,border-color .12s ease,background .12s ease}
+  .opt:active{transform:scale(.98)}
+  .opt .em{margin-right:10px;font-size:1.25em;vertical-align:-2px}
+  .qnum{color:var(--gold);font-weight:800;font-size:13px;letter-spacing:.04em;margin-bottom:6px;display:block}
+  .cap input{width:100%;padding:15px 16px;border:2px solid rgba(255,255,255,.18);border-radius:12px;font-size:16px;font-family:inherit;background:rgba(255,255,255,.06);color:#fff;margin-bottom:12px}
+  .cap input::placeholder{color:#9aa4c2}
+  .cap input:focus{outline:none;border-color:var(--gold)}
+  .chk{list-style:none;margin:22px 0 0;padding:0;text-align:left}
+  .chk li{display:flex;align-items:flex-start;gap:12px;padding:12px 0;color:#dbe1f2;font-size:15px;border-bottom:1px solid rgba(255,255,255,.07);opacity:0;transform:translateX(-8px);transition:opacity .4s ease,transform .4s ease}
+  .chk li.on{opacity:1;transform:none}
+  .chk .vi{flex:none;width:26px;height:26px;border-radius:50%;background:#1f9d57;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800}
+  .done-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(31,157,87,.15);color:#3fd483;border:1px solid rgba(63,212,131,.35);padding:8px 16px;border-radius:50px;font-weight:800;font-size:14px;margin-bottom:10px}
+  .pulse{animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 10px 30px rgba(230,200,120,.25)}50%{transform:scale(1.025);box-shadow:0 16px 44px rgba(230,200,120,.45)}}
+</style>
 </head>
 <body class="qz">
-<div class="box"><div class="in">
+<div class="box"><div class="in" id="in">
 
 <div id="intro">
   <span class="eyebrow" style="color:var(--gold)">Test gratuito · 1 minuto</span>
   <h1>¿Por qué tu mente no se apaga cuando te acuestas?</h1>
-  <p class="sub">Responde 8 preguntas rápidas y descubre tu <b>perfil de sueño y ansiedad</b>, con un plan pensado para ti. Sin registros.</p>
+  <p class="sub">Responde 12 preguntas rápidas y descubre tu <b>perfil de sueño y ansiedad</b>, con un plan personalizado para ti. Sin registros complicados.</p>
   <button class="btn block" id="start">Empezar el test →</button>
   <p class="micro" style="text-align:center">Es un test orientativo, no un diagnóstico médico.</p>
 </div>
 
 <div id="q" class="hide">
   <div class="progress"><i id="pg"></i></div>
+  <span class="qnum" id="qn"></span>
   <h2 id="qt"></h2>
   <div id="qo"></div>
+</div>
+
+<div id="cap" class="hide cap">
+  <span class="eyebrow" style="color:var(--gold)">Último paso</span>
+  <h2>¿A dónde enviamos tu resultado y tu plan?</h2>
+  <p class="sub">Déjanos tu nombre y tu email para ver tu perfil personalizado al instante.</p>
+  <input id="nm" type="text" placeholder="Tu nombre" autocomplete="given-name">
+  <input id="em" type="email" placeholder="Tu mejor email" autocomplete="email" inputmode="email">
+  <button class="btn block" id="send">Ver mi resultado →</button>
+  <p class="micro" id="cerr" style="text-align:center;color:#ff9b9b;display:none">Escribe tu nombre y un email válido.</p>
+  <p class="micro" style="text-align:center">🔒 Tus datos están seguros. Nada de spam.</p>
 </div>
 
 <div id="load" class="hide" style="text-align:center">
@@ -35,29 +65,33 @@
 </div>
 
 <div id="res" class="hide">
-  <span class="eyebrow" style="color:var(--gold)">Tu resultado</span>
+  <span class="done-badge">✔ Análisis completado</span>
   <h1 id="rt"></h1>
   <p class="sub" id="rd"></p>
   <div class="bar"><div><span>Nivel de activación nocturna</span><b id="v1"></b></div><i><b id="b1"></b></i></div>
   <div class="bar"><div><span>Impacto en tu energía diaria</span><b id="v2"></b></div><i><b id="b2"></b></i></div>
   <div class="bar"><div><span>Margen de mejora con el método</span><b id="v3"></b></div><i><b id="b3"></b></i></div>
   <p class="sub" style="margin-top:22px"><b style="color:#fff">Tu plan se centrará en:</b></p>
-  <ul id="rl" style="margin:0 0 24px 20px;color:#dbe1f2"></ul>
-  <a class="btn block" id="go" href="/">Ver mi plan personalizado →</a>
+  <ul class="chk" id="rl" style="margin-bottom:24px"></ul>
+  <a class="btn block pulse" id="go" href="/">SÍ, QUIERO DORMIR EN PAZ ESTA NOCHE →</a>
   <p class="micro" style="text-align:center">Resultado orientativo. No sustituye la consulta con un profesional sanitario.</p>
 </div>
 
 </div></div>
 <script>
 var Q=[
- ["¿Con qué frecuencia te cuesta quedarte dormido/a?",[["Casi todas las noches",3,"c"],["Varias noches a la semana",2,"c"],["De vez en cuando",1,"c"],["Casi nunca",0,"c"]]],
- ["¿Te despiertas de madrugada (hacia las 3-4 h) y no puedes volver a dormir?",[["Sí, casi cada noche",3,"m"],["Varias veces por semana",2,"m"],["Alguna vez",1,"m"],["No",0,"m"]]],
- ["Cuando te metes en la cama, tu mente…",[["Repasa el día y las cosas pendientes sin parar",3,"a"],["Se llena de preocupaciones sobre el futuro",3,"a"],["Está cansada pero el cuerpo no se relaja",2,"c"],["Se apaga con relativa facilidad",0,"a"]]],
- ["¿Cómo te levantas por la mañana?",[["Agotado/a, como si no hubiera dormido",3,"e"],["Con poca energía hasta media mañana",2,"e"],["Bastante bien",1,"e"],["Descansado/a",0,"e"]]],
- ["¿Qué notas en el cuerpo durante el día?",[["Palpitaciones o presión en el pecho",3,"a"],["Nudo en el estómago o tensión en cuello y hombros",2,"a"],["Irritabilidad y falta de concentración",2,"e"],["Nada especial",0,"a"]]],
- ["¿Desde cuándo duermes mal o sientes esta ansiedad?",[["Más de un año",3,""],["Entre 3 y 12 meses",2,""],["Unas semanas",1,""],["Es algo puntual",0,""]]],
- ["¿Qué has probado hasta ahora?",[["Infusiones, aplicaciones y rutinas… sin resultado duradero",2,""],["Pastillas o suplementos, y no quiero depender de ellos",3,""],["Casi nada todavía",1,""],["Me funciona lo que hago",0,""]]],
- ["¿Qué quieres recuperar primero?",[["Dormir de un tirón",0,"m"],["Desconectar la cabeza por la noche",0,"a"],["Tener energía y no sentirme quemado/a",0,"e"],["Dejar de sentir ansiedad durante el día",0,"a"]]]
+ ["😴","¿Con qué frecuencia te cuesta quedarte dormido/a?",[["Casi todas las noches",3,"c"],["Varias noches a la semana",2,"c"],["De vez en cuando",1,"c"],["Casi nunca",0,"c"]]],
+ ["⏰","¿Te despiertas de madrugada (hacia las 3-4 h) y no puedes volver a dormir?",[["Sí, casi cada noche",3,"m"],["Varias veces por semana",2,"m"],["Alguna vez",1,"m"],["No",0,"m"]]],
+ ["🧠","Cuando te metes en la cama, tu mente…",[["Repasa el día y lo pendiente sin parar",3,"a"],["Se llena de preocupaciones sobre el futuro",3,"a"],["Está cansada pero el cuerpo no se relaja",2,"c"],["Se apaga con relativa facilidad",0,"a"]]],
+ ["🌅","¿Cómo te levantas por la mañana?",[["Agotado/a, como si no hubiera dormido",3,"e"],["Con poca energía hasta media mañana",2,"e"],["Bastante bien",1,"e"],["Descansado/a",0,"e"]]],
+ ["🫀","¿Qué notas en el cuerpo durante el día?",[["Palpitaciones o presión en el pecho",3,"a"],["Nudo en el estómago o tensión en cuello y hombros",2,"a"],["Irritabilidad y falta de concentración",2,"e"],["Nada especial",0,"a"]]],
+ ["😰","¿Cómo está tu nivel de ansiedad o estrés últimamente?",[["Muy alto, me supera casi a diario",3,"a"],["Alto, voy tirando como puedo",2,"a"],["Moderado, hay días",1,"a"],["Bajo",0,"a"]]],
+ ["💢","¿Cómo te afecta en tu día a día (trabajo, humor, relaciones)?",[["Me cuesta concentrarme y salto a la mínima",3,"e"],["Estoy más irritable y sin paciencia",2,"e"],["Algo de cansancio, pero cumplo",1,"e"],["Apenas me afecta",0,"e"]]],
+ ["📅","¿Desde cuándo duermes mal o sientes esta ansiedad?",[["Más de un año",3,""],["Entre 3 y 12 meses",2,""],["Unas semanas",1,""],["Es algo puntual",0,""]]],
+ ["💊","¿Qué has probado hasta ahora?",[["Infusiones, apps y rutinas… sin resultado duradero",2,""],["Pastillas o suplementos, y no quiero depender de ellos",3,""],["Casi nada todavía",1,""],["Me funciona lo que hago",0,""]]],
+ ["😟","Si sigues durmiendo así 6 meses más, ¿qué es lo que más temes?",[["Que la ansiedad y el agotamiento vayan a más",3,"a"],["Que mi salud se resienta de verdad",3,"e"],["Perder paciencia con los míos y rendir menos",2,"e"],["No lo había pensado",1,""]]],
+ ["🎯","¿Qué quieres recuperar PRIMERO?",[["Dormir de un tirón sin despertarme",0,"m"],["Desconectar la cabeza por la noche",0,"a"],["Tener energía y no sentirme quemado/a",0,"e"],["Dejar de sentir ansiedad durante el día",0,"a"]]],
+ ["✨","¿Cómo te imaginas despertando dentro de 21 noches si esto funciona?",[["Descansado/a y con la mente tranquila",0,""],["Con energía para mi día sin arrastrarme",0,""],["En calma, sin ese nudo constante",0,""],["Durmiendo del tirón, por fin",0,""]]]
 ];
 var P={
  a:["Perfil «Mente acelerada»","Tu cuerpo está cansado, pero tu mente sigue en modo alerta. Es un patrón muy común en personas con mucha carga mental: el sistema nervioso no recibe la señal de «ya puedes parar».",["Técnicas de respiración y activación del nervio vago (5 min)","Un ritual de «cierre mental» antes de dormir","Plan SOS para los picos de ansiedad"]],
@@ -65,31 +99,47 @@ var P={
  e:["Perfil «Agotamiento acumulado»","Llevas tiempo funcionando por encima de tus reservas. Tu cansancio no es pereza: es la huella de un estrés sostenido que ya afecta a tu energía.",["Recuperar energía sin dejar el trabajo","Micro-pausas de regulación durante el día","Un plan de 21 noches para reconstruir tu descanso"]],
  c:["Perfil «Difícil desconectar»","Te cuesta cruzar la puerta del sueño. Tu cuerpo y tu mente van a ritmos distintos por la noche, y eso retrasa la conciliación.",["Rutina para bajar revoluciones en 20 minutos","Respiración y relajación guiada","Hábitos de pantalla y cafeína que sí marcan diferencia"]]
 };
-var $=function(i){return document.getElementById(i)},s={a:0,m:0,e:0,c:0},n=0,tot=0;
-function show(id){["intro","q","load","res"].forEach(function(x){$(x).classList.toggle("hide",x!==id)})}
+var $=function(i){return document.getElementById(i)},s={a:0,m:0,e:0,c:0},n=0,tot=0,lead={};
+function show(id){["intro","q","cap","load","res"].forEach(function(x){$(x).classList.toggle("hide",x!==id)});
+  var el=$("in");el.style.animation="none";el.offsetHeight;el.style.animation="";}
 function ask(){
-  if(n>=Q.length)return done();
-  $("pg").style.width=(n/Q.length*100)+"%";$("qt").textContent=Q[n][0];
+  if(n>=Q.length)return show("cap");
+  $("pg").style.width=(n/Q.length*100)+"%";
+  $("qn").textContent="Pregunta "+(n+1)+" de "+Q.length;
+  $("qt").innerHTML=Q[n][0]+" "+Q[n][1];
   var h=$("qo");h.innerHTML="";
-  Q[n][1].forEach(function(o){var b=document.createElement("button");b.className="opt";b.textContent=o[0];
+  Q[n][2].forEach(function(o){var b=document.createElement("button");b.className="opt";b.textContent=o[0];
     b.onclick=function(){if(o[2])s[o[2]]+=o[1];tot+=o[1];n++;ask()};h.appendChild(b)});
+  window.scrollTo(0,0);
+}
+function submitLead(){
+  var nm=$("nm").value.trim(),em=$("em").value.trim();
+  if(nm.length<2||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){$("cerr").style.display="block";return}
+  lead={name:nm,email:em};
+  try{fetch("/api/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(lead)})}catch(e){}
+  track("Lead");done();
 }
 function done(){
-  $("pg").style.width="100%";show("load");track("Lead");
-  var m=["Comparando tu patrón de sueño","Identificando tu perfil","Preparando tu plan de 21 noches"],i=0;
-  var t=setInterval(function(){$("ld").textContent=m[++i%m.length]},900);
-  setTimeout(function(){clearInterval(t);result()},2900);
+  $("pg").style.width="100%";show("load");
+  var m=["Comparando tu patrón de sueño","Identificando tu perfil","Midiendo tu nivel de activación nocturna","Preparando tu plan de 21 noches"],i=0;
+  var t=setInterval(function(){$("ld").textContent=m[++i%m.length]},800);
+  setTimeout(function(){clearInterval(t);result()},3400);
 }
 function result(){
   var k="a",best=-1;for(var x in s)if(s[x]>best){best=s[x];k=x}
-  var d=P[k],act=Math.min(97,Math.max(48,Math.round(40+tot*2.6))),en=Math.min(95,Math.max(42,act-6));
-  $("rt").textContent=d[0];$("rd").textContent=d[1];
-  $("rl").innerHTML=d[2].map(function(l){return "<li>"+l+"</li>"}).join("");
-  $("go").href="/?perfil="+k+(location.search?"&"+location.search.slice(1):"");
+  var d=P[k],act=Math.min(97,Math.max(48,Math.round(40+tot*2.4))),en=Math.min(95,Math.max(42,act-6));
+  $("rt").textContent=(lead.name?lead.name+", ":"")+d[0];
+  $("rd").textContent=d[1];
+  $("rl").innerHTML=d[2].map(function(l){return '<li><span class="vi">✔</span><span>'+l+'</span></li>'}).join("");
+  var q=location.search?location.search.slice(1):"";
+  $("go").href="/?perfil="+k+(q?"&"+q:"");
   [[1,act],[2,en],[3,91]].forEach(function(p){$("v"+p[0]).textContent=p[1]+"%";requestAnimationFrame(function(){setTimeout(function(){$("b"+p[0]).style.width=p[1]+"%"},60)})});
   show("res");window.scrollTo(0,0);
+  var li=$("rl").children;for(var j=0;j<li.length;j++)(function(el,delay){setTimeout(function(){el.classList.add("on")},delay)})(li[j],400+j*450);
 }
 $("start").onclick=function(){track("QuizStart",1);show("q");ask()};
+$("send").onclick=submitLead;
+$("em").addEventListener("keydown",function(e){if(e.key==="Enter")submitLead()});
 track("ViewContent");
 </script>
 </body>
