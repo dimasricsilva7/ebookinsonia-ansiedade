@@ -65,6 +65,21 @@ export default async function Home() {
           <li>Sientes que estás al límite: cansancio mental, poca paciencia, ese «burnout» que no se va con un fin de semana.</li>
         </ul></div></section>
 
+      {/* AUTOR */}
+      <section><div className="wrap">
+        <div className="authorbox">
+          {s.authorImg
+            ? /* eslint-disable-next-line @next/next/no-img-element */ <img className="author-img" src={s.authorImg} alt={s.authorName} />
+            : <div className="author-img ph">🌙</div>}
+          <div>
+            <span className="eyebrow">Quién está detrás</span>
+            <h2 style={{ marginBottom: ".3em" }}>Dormir bien se puede entrenar</h2>
+            <p style={{ whiteSpace: "pre-line", color: "var(--mute)" }}>{s.authorDesc}</p>
+            <p className="author-name">— {s.authorName}</p>
+          </div>
+        </div>
+      </div></section>
+
       {/* COSTE FUTURO */}
       <section className="dark"><div className="wrap narrow center">
         <span className="eyebrow">¿Y si sigue así?</span>
@@ -182,21 +197,6 @@ export default async function Home() {
           <BuyButton url={s.checkoutUrl} className="btn" block>Quiero Noches en Calma →</BuyButton>
           <div className="pay"><img src="/pay/visa.svg" alt="Visa" /><img src="/pay/master.svg" alt="Mastercard" /><img src="/pay/apple_pay.svg" alt="Apple Pay" /><img src="/pay/google_pay.svg" alt="Google Pay" /><img src="/pay/bizum.svg" alt="Bizum" /></div>
           <p className="micro">🔒 Pago seguro y cifrado. Métodos disponibles según tu dispositivo y país.</p>
-        </div>
-      </div></section>
-
-      {/* AUTOR */}
-      <section><div className="wrap narrow">
-        <div className="authorbox">
-          {s.authorImg
-            ? /* eslint-disable-next-line @next/next/no-img-element */ <img className="author-img" src={s.authorImg} alt={s.authorName} />
-            : <div className="author-img ph">🌙</div>}
-          <div>
-            <span className="eyebrow">Quién está detrás</span>
-            <h2 style={{ marginBottom: ".3em" }}>Dormir bien se puede entrenar</h2>
-            <p style={{ whiteSpace: "pre-line", color: "var(--mute)" }}>{s.authorDesc}</p>
-            <p className="author-name">— {s.authorName}</p>
-          </div>
         </div>
       </div></section>
 
